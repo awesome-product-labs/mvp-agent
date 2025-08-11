@@ -9,8 +9,9 @@
 - **Homebrew**: v4.6.0 installed
 
 ### Running Services
-- **Frontend**: http://localhost:3001 (Vite dev server)
+- **Frontend**: http://localhost:3001 (Vite dev server - auto-switched from 3000)
 - **Backend**: http://localhost:8003 (FastAPI server)
+- **CORS**: Configured for both ports 3000 and 3001
 
 ### Project Structure
 ```
