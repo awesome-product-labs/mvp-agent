@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Generation Agent - Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-900">MVP Generation Agent</h1>
+                </div>
+                <div class="text-sm text-gray-500">AI-Powered Feature Validation</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 bg-gradient-to-br from-primary-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                    Build Better MVPs with 
+                    <span class="bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">AI-Powered Validation</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Stop building features that don't matter. Get instant AI analysis on feature 
+                    suitability, complexity, and user value. Make data-driven decisions for your MVP.
+                </p>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">MVP Focus</h3>
+                    <p class="text-gray-600 text-sm">Analyze features for MVP essentiality and core user value</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Complexity Analysis</h3>
+                    <p class="text-gray-600 text-sm">Get accurate complexity scores and implementation estimates</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">User Value</h3>
+                    <p class="text-gray-600 text-sm">Measure real user impact and prioritize high-value features</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Smart Alternatives</h3>
+                    <p class="text-gray-600 text-sm">Get intelligent suggestions for simpler implementations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Results Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Live Demo Results</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Here are real validation results from our AI system analyzing different feature types.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- User Authentication Result -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-green-800 mb-2">ACCEPT</h3>
+                            <h4 class="font-semibold text-gray-900 mb-2">User Authentication</h4>
+                            <p class="text-gray-700 text-sm mb-4">
+                                This feature aligns well with MVP principles. It provides good user value (7/10) with manageable complexity (5/10).
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">MVP Essentiality</span>
+                            <span class="font-semibold">8.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 80%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">User Value</span>
+                            <span class="font-semibold">7.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 70%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">Complexity</span>
+                            <span class="font-semibold">5.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                        
+                        <div class="pt-2 border-t border-gray-200">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 font-medium">Overall Score</span>
+                                <span class="font-bold">6.9/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 69%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-gray-500 pt-2">
+                            Timeline: 2-4 weeks • Confidence: 95%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendation Engine Result -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-yellow-800 mb-2">MODIFY</h3>
+                            <h4 class="font-semibold text-gray-900 mb-2">AI-Powered Recommendation Engine</h4>
+                            <p class="text-gray-700 text-sm mb-4">
+                                This feature is quite complex (9/10) for an MVP. Consider simplifying the implementation or breaking it into smaller components.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">MVP Essentiality</span>
+                            <span class="font-semibold">5.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">User Value</span>
+                            <span class="font-semibold">9.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-600">Complexity</span>
+                            <span class="font-semibold">9.0/10</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: 90%"></div>
+                        </div>
+                        
+                        <div class="pt-2 border-t border-gray-200">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 font-medium">Overall Score</span>
+                                <span class="font-bold">5.4/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 54%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-gray-500 pt-2">
+                            Timeline: 8+ weeks • Confidence: 100%
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <h5 class="font-medium text-gray-900 mb-2">Recommended Alternatives:</h5>
+                        <ul class="space-y-1 text-sm text-gray-600">
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary-500 mt-1">•</span>
+                                <span>Start with a basic version and iterate</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary-500 mt-1">•</span>
+                                <span>Use third-party services instead of building from scratch</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <span class="text-primary-500 mt-1">•</span>
+                                <span>Focus on core functionality first</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our AI-powered system analyzes your feature requests using advanced 
+                    natural language processing and MVP best practices.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-primary-600">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Submit Feature</h3>
+                    <p class="text-gray-600">
+                        Describe your feature idea with as much detail as possible. 
+                        Include user stories and acceptance criteria for better analysis.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-primary-600">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">AI Analysis</h3>
+                    <p class="text-gray-600">
+                        Claude AI analyzes your feature against MVP principles, 
+                        scoring complexity, user value, and implementation requirements.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-primary-600">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Get Recommendations</h3>
+                    <p class="text-gray-600">
+                        Receive detailed analysis with accept/modify/defer/reject decisions, 
+                        plus alternatives and implementation guidance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Ready to Get Started?</h2>
+            <p class="text-xl text-gray-600 mb-8">
+                The MVP Generation Agent is ready to help you build better products faster.
+            </p>
+            
+            <div class="bg-gray-50 rounded-lg p-8 text-left">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Setup:</h3>
+                <div class="space-y-3 text-sm font-mono bg-gray-900 text-green-400 p-4 rounded">
+                    <div># 1. Clone or navigate to the project</div>
+                    <div>cd mvp-generation-agent/backend</div>
+                    <div></div>
+                    <div># 2. Activate virtual environment</div>
+                    <div>source venv/bin/activate</div>
+                    <div></div>
+                    <div># 3. Test the system</div>
+                    <div>python test_mvp_agent.py</div>
+                    <div></div>
+                    <div># 4. Start the API server (with Claude API key)</div>
+                    <div>uvicorn src.api.main:app --reload</div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-blue-800">
+                        <strong>Note:</strong> To use real AI analysis, get a Claude API key from Anthropic and update the 
+                        <code class="bg-blue-100 px-1 rounded">ANTHROPIC_API_KEY</code> in your <code class="bg-blue-100 px-1 rounded">.env</code> file.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                        <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold">MVP Generation Agent</h3>
+                </div>
+                <p class="text-gray-400 mb-6">AI-powered feature validation for better MVPs</p>
+                <div class="text-sm text-gray-500">
+                    Built with Claude AI, FastAPI, and React • Created by Cline
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

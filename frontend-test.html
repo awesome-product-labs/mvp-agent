@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Generation Agent - Test Interface</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f7fafc;
+        }
+        .section h2 {
+            color: #4a5568;
+            margin-top: 0;
+        }
+        button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #3182ce;
+        }
+        .success {
+            background: #48bb78;
+        }
+        .error {
+            background: #f56565;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            margin: 5px 0;
+            font-family: inherit;
+        }
+        .result {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 MVP Generation Agent - Test Interface</h1>
+        
+        <div class="section">
+            <h2>🔍 System Health Check</h2>
+            <button onclick="checkHealth()">Check Backend Health</button>
+            <div id="healthResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <h2>📋 Create Project</h2>
+                <input type="text" id="projectName" placeholder="Project Name" value="Test MVP Project">
+                <textarea id="projectDescription" placeholder="Project Description" rows="3">A comprehensive task management platform for remote teams with real-time collaboration features.</textarea>
+                <input type="text" id="projectIndustry" placeholder="Industry" value="PRODUCTIVITY">
+                <input type="text" id="targetUsers" placeholder="Target Users" value="Remote teams and project managers">
+                <button onclick="createProject()">Create Project</button>
+                <div id="projectResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="section">
+                <h2>⭐ Add Feature</h2>
+                <input type="text" id="featureName" placeholder="Feature Name" value="User Authentication">
+                <textarea id="featureDescription" placeholder="Feature Description" rows="3">Secure user authentication system with login, registration, and password reset functionality.</textarea>
+                <select id="featurePriority">
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+                <button onclick="addFeature()" disabled id="addFeatureBtn">Add Feature (Create Project First)</button>
+                <div id="featureResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="section">
+                <h2>📝 Generate User Story</h2>
+                <button onclick="generateUserStory()" disabled id="userStoryBtn">Generate User Story</button>
+                <div id="userStoryResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 Re-evaluate Feature</h2>
+                <button onclick="reEvaluateFeature()" disabled id="reEvaluateBtn">Re-evaluate Feature</button>
+                <div id="reEvaluateResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Generate MVP</h2>
+            <button onclick="generateMVP()" disabled id="generateMVPBtn">Generate MVP</button>
+            <div id="mvpResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="section">
+            <h2>📊 List All Projects</h2>
+            <button onclick="listProjects()">List Projects</button>
+            <div id="projectsResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentProjectId = null;
+        let currentFeatureId = null;
+
+        async function makeRequest(method, url, data = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                };
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+
+                const response = await fetch(url, options);
+                const result = await response.json();
+                
+                return {
+                    success: response.ok,
+                    status: response.status,
+                    data: result
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    status: 0,
+                    data: { error: error.message }
+                };
+            }
+        }
+
+        function showResult(elementId, result, title = '') {
+            const element = document.getElementById(elementId);
+            const status = result.success ? 'SUCCESS' : 'ERROR';
+            const statusClass = result.success ? 'success' : 'error';
+            
+            element.innerHTML = `
+                <strong>${title}</strong>
+                <span class="status ${statusClass}">${status} (${result.status})</span>
+                <br><br>
+                ${JSON.stringify(result.data, null, 2)}
+            `;
+            element.style.display = 'block';
+        }
+
+        async function checkHealth() {
+            const result = await makeRequest('GET', 'http://localhost:8003/api/v1/health');
+            showResult('healthResult', result, '🔍 Health Check');
+        }
+
+        async function createProject() {
+            const projectData = {
+                name: document.getElementById('projectName').value,
+                description: document.getElementById('projectDescription').value,
+                industry: document.getElementById('projectIndustry').value,
+                target_users: document.getElementById('targetUsers').value,
+                tech_stack: {
+                    frontend: ["React"],
+                    backend: ["Node.js"],
+                    database: ["PostgreSQL"]
+                },
+                team_experience: "intermediate"
+            };
+
+            const result = await makeRequest('POST', 'http://localhost:8003/api/v1/projects', projectData);
+            showResult('projectResult', result, '📋 Project Creation');
+            
+            if (result.success) {
+                currentProjectId = result.data.id;
+                document.getElementById('addFeatureBtn').disabled = false;
+                document.getElementById('addFeatureBtn').textContent = 'Add Feature';
+                document.getElementById('generateMVPBtn').disabled = false;
+            }
+        }
+
+        async function addFeature() {
+            if (!currentProjectId) {
+                alert('Please create a project first!');
+                return;
+            }
+
+            const featureData = {
+                name: document.getElementById('featureName').value,
+                description: document.getElementById('featureDescription').value,
+                priority: document.getElementById('featurePriority').value
+            };
+
+            const result = await makeRequest('POST', `http://localhost:8003/api/v1/projects/${currentProjectId}/features`, featureData);
+            showResult('featureResult', result, '⭐ Feature Addition');
+            
+            if (result.success) {
+                // Extract feature ID from the response
+                const projectResponse = await makeRequest('GET', `http://localhost:8003/api/v1/projects/${currentProjectId}`);
+                if (projectResponse.success && projectResponse.data.features.length > 0) {
+                    currentFeatureId = projectResponse.data.features[0].id;
+                    document.getElementById('userStoryBtn').disabled = false;
+                    document.getElementById('reEvaluateBtn').disabled = false;
+                }
+            }
+        }
+
+        async function generateUserStory() {
+            if (!currentProjectId || !currentFeatureId) {
+                alert('Please create a project and add a feature first!');
+                return;
+            }
+
+            const result = await makeRequest('POST', `http://localhost:8003/api/v1/projects/${currentProjectId}/features/${currentFeatureId}/generate-user-story`);
+            showResult('userStoryResult', result, '📝 User Story Generation');
+        }
+
+        async function reEvaluateFeature() {
+            if (!currentProjectId || !currentFeatureId) {
+                alert('Please create a project and add a feature first!');
+                return;
+            }
+
+            const result = await makeRequest('PUT', `http://localhost:8003/api/v1/projects/${currentProjectId}/features/${currentFeatureId}/re-evaluate`);
+            showResult('reEvaluateResult', result, '🔄 Feature Re-evaluation');
+        }
+
+        async function generateMVP() {
+            if (!currentProjectId) {
+                alert('Please create a project first!');
+                return;
+            }
+
+            const mvpData = {
+                target_timeline_weeks: 12,
+                budget_range: "10000-50000",
+                priority_focus: "user_experience"
+            };
+
+            const result = await makeRequest('POST', `http://localhost:8003/api/v1/projects/${currentProjectId}/generate-mvp`, mvpData);
+            showResult('mvpResult', result, '🎯 MVP Generation');
+        }
+
+        async function listProjects() {
+            const result = await makeRequest('GET', 'http://localhost:8003/api/v1/projects');
+            showResult('projectsResult', result, '📊 Projects List');
+        }
+
+        // Auto-check health on page load
+        window.onload = function() {
+            checkHealth();
+        };
+    </script>
+</body>
+</html>
