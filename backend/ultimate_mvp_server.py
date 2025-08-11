@@ -550,9 +550,9 @@ async def generate_user_story(project_id: str, feature_id: str):
     }
 
 def generate_ai_user_story(feature_name: str, feature_description: str, project: EnhancedProject) -> str:
-    """Generate user story using AI-like logic based on feature and project context."""
+    """Generate user story using research-backed best practices from Atlassian and Mountain Goat Software."""
     
-    # Determine user type based on project context
+    # Determine specific user persona based on project context
     target_users = project.target_users.lower()
     
     if "business" in target_users or "owner" in target_users:
@@ -565,81 +565,278 @@ def generate_ai_user_story(feature_name: str, feature_description: str, project:
         user_type = "project manager"
     elif "team" in target_users:
         user_type = "team member"
+    elif "admin" in target_users:
+        user_type = "administrator"
     else:
         user_type = "user"
     
-    # Determine action based on feature name and description
+    # Determine action and specific, measurable benefit
     feature_lower = feature_name.lower()
     description_lower = feature_description.lower()
     
+    # Authentication & Security Features
     if "auth" in feature_lower or "login" in feature_lower:
-        action = "securely log into the platform"
-        benefit = "access my personal account and data"
+        action = "securely authenticate and access the platform"
+        benefit = generate_security_benefit(project.industry, user_type)
+    
+    # Dashboard & Analytics Features  
     elif "dashboard" in feature_lower:
-        action = "view a comprehensive dashboard"
-        benefit = "quickly understand the current status and key metrics"
+        action = "view a comprehensive dashboard with key metrics"
+        benefit = generate_dashboard_benefit(project.industry, user_type)
+    
+    # Search & Discovery Features
     elif "search" in feature_lower:
-        action = "search for relevant content"
-        benefit = "quickly find what I'm looking for"
+        action = "search and filter content efficiently"
+        benefit = generate_search_benefit(project.industry, user_type)
+    
+    # Profile & Account Management
     elif "profile" in feature_lower:
-        action = "manage my profile information"
-        benefit = "keep my information up-to-date and personalized"
+        action = "manage my profile and account settings"
+        benefit = generate_profile_benefit(project.industry, user_type)
+    
+    # Payment & Transaction Features
     elif "payment" in feature_lower or "checkout" in feature_lower:
         action = "complete secure transactions"
-        benefit = "purchase products/services safely and efficiently"
+        benefit = generate_payment_benefit(project.industry, user_type)
+    
+    # Communication Features
     elif "notification" in feature_lower:
-        action = "receive timely notifications"
-        benefit = "stay informed about important updates"
+        action = "receive timely and relevant notifications"
+        benefit = generate_notification_benefit(project.industry, user_type)
+    
+    # Reporting & Analytics
     elif "report" in feature_lower or "analytics" in feature_lower:
-        action = "generate detailed reports"
-        benefit = "make data-driven decisions"
+        action = "generate detailed reports and analytics"
+        benefit = generate_reporting_benefit(project.industry, user_type)
+    
+    # Communication & Collaboration
     elif "message" in feature_lower or "chat" in feature_lower:
-        action = "communicate with other users"
-        benefit = "collaborate effectively and stay connected"
+        action = "communicate with other users in real-time"
+        benefit = generate_communication_benefit(project.industry, user_type)
+    
+    # File & Content Management
     elif "upload" in feature_lower or "file" in feature_lower:
-        action = "upload and manage files"
-        benefit = "organize and share my documents efficiently"
+        action = "upload, organize, and manage files"
+        benefit = generate_file_benefit(project.industry, user_type)
+    
+    # Inventory & Product Management
+    elif "inventory" in feature_lower or "product" in feature_lower:
+        action = f"manage {feature_name.lower()}"
+        benefit = generate_inventory_benefit(project.industry, user_type)
+    
+    # Task & Project Management
+    elif "task" in feature_lower or "project" in feature_lower:
+        action = f"create and track {feature_name.lower()}"
+        benefit = generate_task_benefit(project.industry, user_type)
+    
+    # Generic features with context-aware benefits
     else:
-        # Generic action based on description
         if "create" in description_lower:
             action = f"create and manage {feature_name.lower()}"
-            benefit = "organize my work more effectively"
+            benefit = generate_creation_benefit(project.industry, user_type, feature_name)
         elif "track" in description_lower:
-            action = f"track {feature_name.lower()}"
-            benefit = "monitor progress and stay organized"
+            action = f"track and monitor {feature_name.lower()}"
+            benefit = generate_tracking_benefit(project.industry, user_type, feature_name)
         elif "manage" in description_lower:
             action = f"manage {feature_name.lower()}"
-            benefit = "have better control over my workflow"
+            benefit = generate_management_benefit(project.industry, user_type, feature_name)
+        elif "view" in description_lower or "display" in description_lower:
+            action = f"view and analyze {feature_name.lower()}"
+            benefit = generate_viewing_benefit(project.industry, user_type, feature_name)
         else:
             action = f"use {feature_name.lower()}"
-            benefit = "accomplish my goals more efficiently"
+            benefit = generate_generic_benefit(project.industry, user_type, feature_name)
     
-    # Industry-specific benefit adjustments
-    if project.industry == "E-COMMERCE":
-        if "payment" in feature_lower:
-            benefit = "complete purchases quickly and securely"
-        elif "product" in feature_lower:
-            benefit = "find and purchase the right products"
-    elif project.industry == "FINTECH":
-        if "payment" in feature_lower:
-            benefit = "manage my finances securely"
-        elif "account" in feature_lower:
-            benefit = "have full control over my financial data"
-    elif project.industry == "HEALTHCARE":
-        if "record" in feature_lower:
-            benefit = "maintain accurate health records"
-        elif "appointment" in feature_lower:
-            benefit = "manage my healthcare appointments efficiently"
-    elif project.industry == "PRODUCTIVITY":
-        if "task" in feature_lower:
-            benefit = "stay organized and meet deadlines"
-        elif "team" in feature_lower:
-            benefit = "collaborate effectively with my team"
-    
-    # Construct user story
+    # Construct user story with specific, measurable benefit
     user_story = f"As a {user_type}, I want to {action} so that I can {benefit}."
     
     return user_story
+
+def generate_security_benefit(industry: str, user_type: str) -> str:
+    """Generate specific security-related benefits."""
+    if industry == "FINTECH":
+        return "protect my financial data and comply with banking regulations"
+    elif industry == "HEALTHCARE":
+        return "ensure my medical information remains HIPAA compliant and secure"
+    elif industry == "E-COMMERCE":
+        return "protect my payment information and personal data from breaches"
+    elif user_type == "business owner":
+        return "protect sensitive business data and maintain customer trust"
+    else:
+        return "access my account securely and protect my personal information"
+
+def generate_dashboard_benefit(industry: str, user_type: str) -> str:
+    """Generate specific dashboard-related benefits."""
+    if industry == "E-COMMERCE" and user_type == "business owner":
+        return "monitor sales performance and identify revenue opportunities within 30 seconds"
+    elif industry == "FINTECH":
+        return "track my financial goals and spending patterns in real-time"
+    elif industry == "HEALTHCARE":
+        return "monitor patient health metrics and identify critical alerts immediately"
+    elif user_type == "project manager":
+        return "track team productivity and project milestones at a glance"
+    else:
+        return "understand key performance indicators and make informed decisions quickly"
+
+def generate_search_benefit(industry: str, user_type: str) -> str:
+    """Generate specific search-related benefits."""
+    if industry == "E-COMMERCE":
+        return "find the exact products I need in under 10 seconds"
+    elif industry == "HEALTHCARE":
+        return "locate patient records and medical history instantly"
+    elif industry == "PRODUCTIVITY":
+        return "find relevant documents and information 50% faster"
+    else:
+        return "locate relevant information quickly and reduce time spent browsing"
+
+def generate_profile_benefit(industry: str, user_type: str) -> str:
+    """Generate specific profile management benefits."""
+    if industry == "E-COMMERCE":
+        return "receive personalized recommendations and faster checkout experiences"
+    elif industry == "FINTECH":
+        return "customize my financial dashboard and security preferences"
+    elif user_type == "business owner":
+        return "maintain professional credibility and control my business presence"
+    else:
+        return "personalize my experience and maintain accurate contact information"
+
+def generate_payment_benefit(industry: str, user_type: str) -> str:
+    """Generate specific payment-related benefits."""
+    if industry == "E-COMMERCE":
+        return "complete purchases in under 2 minutes with confidence"
+    elif industry == "FINTECH":
+        return "transfer funds securely while maintaining full transaction visibility"
+    elif user_type == "business owner":
+        return "process customer payments efficiently and reduce transaction costs"
+    else:
+        return "make secure payments quickly without compromising financial data"
+
+def generate_notification_benefit(industry: str, user_type: str) -> str:
+    """Generate specific notification-related benefits."""
+    if industry == "E-COMMERCE":
+        return "stay informed about order status and never miss important updates"
+    elif industry == "HEALTHCARE":
+        return "receive critical health alerts and appointment reminders on time"
+    elif industry == "FINTECH":
+        return "get immediate alerts about account activity and security events"
+    elif user_type == "project manager":
+        return "stay updated on project progress and team activities in real-time"
+    else:
+        return "stay informed about important events without information overload"
+
+def generate_reporting_benefit(industry: str, user_type: str) -> str:
+    """Generate specific reporting-related benefits."""
+    if industry == "E-COMMERCE" and user_type == "business owner":
+        return "identify sales trends and optimize inventory decisions"
+    elif industry == "FINTECH":
+        return "track spending patterns and achieve financial goals"
+    elif industry == "HEALTHCARE":
+        return "monitor patient outcomes and improve care quality"
+    elif user_type == "project manager":
+        return "demonstrate team productivity and project ROI to stakeholders"
+    else:
+        return "make data-driven decisions and track performance metrics"
+
+def generate_communication_benefit(industry: str, user_type: str) -> str:
+    """Generate specific communication-related benefits."""
+    if industry == "HEALTHCARE":
+        return "coordinate patient care and reduce communication delays"
+    elif industry == "E-COMMERCE":
+        return "get quick customer support and resolve issues faster"
+    elif user_type == "team member":
+        return "collaborate effectively and reduce email overhead by 40%"
+    else:
+        return "communicate efficiently and maintain clear project coordination"
+
+def generate_file_benefit(industry: str, user_type: str) -> str:
+    """Generate specific file management benefits."""
+    if industry == "HEALTHCARE":
+        return "maintain organized patient records and ensure compliance"
+    elif industry == "FINTECH":
+        return "securely store financial documents and maintain audit trails"
+    elif user_type == "business owner":
+        return "organize business documents and improve team accessibility"
+    else:
+        return "keep files organized and accessible while maintaining version control"
+
+def generate_inventory_benefit(industry: str, user_type: str) -> str:
+    """Generate specific inventory/product management benefits."""
+    if industry == "E-COMMERCE":
+        return "prevent stockouts and optimize inventory turnover rates"
+    elif user_type == "business owner":
+        return "reduce inventory costs and improve cash flow management"
+    else:
+        return "maintain optimal stock levels and reduce waste"
+
+def generate_task_benefit(industry: str, user_type: str) -> str:
+    """Generate specific task management benefits."""
+    if user_type == "project manager":
+        return "deliver projects on time and within budget consistently"
+    elif industry == "HEALTHCARE":
+        return "ensure patient care tasks are completed without delays"
+    elif user_type == "team member":
+        return "prioritize work effectively and meet deadlines consistently"
+    else:
+        return "increase productivity and reduce task completion time by 25%"
+
+def generate_creation_benefit(industry: str, user_type: str, feature_name: str) -> str:
+    """Generate specific creation-related benefits."""
+    if "content" in feature_name.lower():
+        return "produce engaging content 30% faster and reach target audiences"
+    elif "campaign" in feature_name.lower():
+        return "launch marketing campaigns and track ROI effectively"
+    elif user_type == "business owner":
+        return f"streamline {feature_name.lower()} creation and reduce operational overhead"
+    else:
+        return f"create {feature_name.lower()} efficiently and maintain quality standards"
+
+def generate_tracking_benefit(industry: str, user_type: str, feature_name: str) -> str:
+    """Generate specific tracking-related benefits."""
+    if "performance" in feature_name.lower():
+        return "identify improvement opportunities and optimize results"
+    elif "progress" in feature_name.lower():
+        return "stay on schedule and meet project milestones consistently"
+    elif user_type == "business owner":
+        return f"monitor {feature_name.lower()} and make informed business decisions"
+    else:
+        return f"track {feature_name.lower()} progress and achieve measurable outcomes"
+
+def generate_management_benefit(industry: str, user_type: str, feature_name: str) -> str:
+    """Generate specific management-related benefits."""
+    if "customer" in feature_name.lower():
+        return "improve customer satisfaction and increase retention rates"
+    elif "team" in feature_name.lower():
+        return "coordinate team activities and improve collaboration efficiency"
+    elif user_type == "business owner":
+        return f"optimize {feature_name.lower()} operations and reduce costs"
+    else:
+        return f"organize {feature_name.lower()} effectively and improve workflow efficiency"
+
+def generate_viewing_benefit(industry: str, user_type: str, feature_name: str) -> str:
+    """Generate specific viewing/analysis benefits."""
+    if "data" in feature_name.lower() or "analytics" in feature_name.lower():
+        return "identify trends and make data-driven decisions quickly"
+    elif "report" in feature_name.lower():
+        return "understand performance metrics and communicate results effectively"
+    else:
+        return f"analyze {feature_name.lower()} and gain actionable insights"
+
+def generate_generic_benefit(industry: str, user_type: str, feature_name: str) -> str:
+    """Generate context-aware generic benefits as last resort."""
+    if industry == "E-COMMERCE":
+        return "improve customer experience and increase conversion rates"
+    elif industry == "FINTECH":
+        return "manage finances more effectively and reduce financial risks"
+    elif industry == "HEALTHCARE":
+        return "improve patient care quality and ensure compliance"
+    elif industry == "PRODUCTIVITY":
+        return "increase work efficiency and achieve better outcomes"
+    elif user_type == "business owner":
+        return "optimize business operations and improve profitability"
+    elif user_type == "project manager":
+        return "deliver projects successfully and improve team performance"
+    else:
+        return "achieve better results and save valuable time"
 
 def calculate_lean_startup_score(feature_description: str, feature_name: str) -> float:
     """Calculate Lean Startup methodology score - Build-Measure-Learn readiness."""

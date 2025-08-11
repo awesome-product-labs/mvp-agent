@@ -105,6 +105,62 @@ const MVPGenerator = ({ project, features }) => {
             </div>
           </div>
 
+          {/* Core MVP Features */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">🚀 Core MVP Features</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {mvpDefinition.core_features.map((feature, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="font-semibold text-gray-800">{feature.feature_name}</h4>
+                    <div className="flex space-x-2">
+                      <span className={`px-2 py-1 text-xs rounded ${
+                        feature.priority === 'high' ? 'bg-red-100 text-red-800' :
+                        feature.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-green-100 text-green-800'
+                      }`}>
+                        {feature.priority}
+                      </span>
+                      <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-800">
+                        {feature.status}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-gray-600 mb-3">{feature.feature_description}</p>
+                  
+                  {feature.user_story && (
+                    <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-3">
+                      <p className="text-sm text-blue-800 italic">"{feature.user_story}"</p>
+                    </div>
+                  )}
+                  
+                  <div className="flex justify-between items-center text-sm text-gray-500">
+                    <span>Effort: {feature.estimated_weeks ? `${feature.estimated_weeks} weeks` : 'TBD'}</span>
+                    {feature.validation_result && feature.validation_result.score && (
+                      <span>Score: {feature.validation_result.score.overall_score}/10</span>
+                    )}
+                  </div>
+                  
+                  {feature.acceptance_criteria && feature.acceptance_criteria.length > 0 && (
+                    <div className="mt-3">
+                      <h5 className="text-xs font-medium text-gray-500 uppercase mb-1">Acceptance Criteria</h5>
+                      <ul className="text-xs text-gray-600 space-y-1">
+                        {feature.acceptance_criteria.slice(0, 2).map((criteria, i) => (
+                          <li key={i}>• {criteria}</li>
+                        ))}
+                        {feature.acceptance_criteria.length > 2 && (
+                          <li className="text-gray-400">+ {feature.acceptance_criteria.length - 2} more...</li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* MVP Overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
